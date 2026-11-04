@@ -1,0 +1,111 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Mono, openpyxl and lxml
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q mono-devel
+          pip install openpyxl lxml
+      - name: Check XAML resources and handlers
+        run: python3 tests/XamlLint/check.py
+      - name: Export parity, XML round trip and schema
+        run: bash tests/ExportParity/run.sh
+
+  build:
+    runs-on: windows-latest
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build src/DeviceDossier/DeviceDossier.csproj -c Release -nologo
+
+      - name: Package
+        shell: pwsh
+        run: |
+          $out = "src/DeviceDossier/bin/Release/net48"
+          New-Item -ItemType Directory -Force -Path dist/DeviceDossier | Out-Null
+          Copy-Item "$out/DeviceDossier.exe", "$out/DeviceDossier.exe.config" dist/DeviceDossier/
+          Copy-Item README.md, LICENSE, CHANGELOG.md, PRIVACY.md dist/DeviceDossier/
+          Copy-Item config/DeviceDossier.settings.example.xml dist/DeviceDossier/
+          Compress-Archive -Path dist/DeviceDossier/* -DestinationPath dist/DeviceDossier.zip -Force
+          $lines = foreach ($f in "dist/DeviceDossier.zip", "dist/DeviceDossier/DeviceDossier.exe") {
+            "{0}  {1}" -f (Get-FileHash $f -Algorithm SHA256).Hash.ToLowerInvariant(), (Split-Path $f -Leaf)
+          }
+          $lines | Set-Content dist/SHA256SUMS.txt -Encoding ascii
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Smoke test (silent audit)
+        shell: pwsh
+        run: |
+          $reports = Join-Path $PWD "smoke"
+          $p = Start-Process -FilePath "dist/DeviceDossier/DeviceDossier.exe" -ArgumentList @("--silent", "--formats", "all", "--output", "`"$reports`"", "--asset-tag", "CI-001", "--log", "`"$reports/run.log`"") -Wait -PassThru
+          Get-Content "$reports/run.log"
+          if ($p.ExitCode -ne 0) { throw "DeviceDossier exited with code $($p.ExitCode)" }
+          foreach ($ext in "xlsx", "html", "xml") {
+            if (-not (Get-ChildItem $reports -Filter "*.$ext")) { throw "No .$ext report was written" }
+          }
+          $xml = [xml](Get-Content (Get-ChildItem $reports -Filter *.xml | Select-Object -First 1).FullName -Raw)
+          if (-not $xml.DeviceDossierReport.Section) { throw "The XML report has no sections" }
+          $p = Start-Process -FilePath "dist/DeviceDossier/DeviceDossier.exe" -ArgumentList @("--silent", "--formats", "nonsense") -Wait -PassThru
+          if ($p.ExitCode -ne 2) { throw "Expected exit code 2 for invalid arguments, got $($p.ExitCode)" }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DeviceDossier
+          path: |
+            dist/DeviceDossier/
+            dist/SHA256SUMS.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-test-reports
+          path: smoke/
+
+      - uses: actions/upload-artifact@v4
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: release-files
+          path: |
+            dist/DeviceDossier.zip
+            dist/SHA256SUMS.txt
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-files
+          path: release
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          flags=""
+          case "$TAG" in *-*) flags="--prerelease" ;; esac
+          gh release create "$TAG" release/DeviceDossier.zip release/SHA256SUMS.txt --title "DeviceDossier $TAG" --generate-notes $flags

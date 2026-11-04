@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4C8DFF"/>
+      <stop offset="1" stop-color="#3730A3"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E4ECFF"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="58" fill="url(#bg)"/>
+  <rect x="8" y="8" width="240" height="240" rx="58" fill="url(#shine)"/>
+  <path d="M56 78 a14 14 0 0 1 14 -14 h34 a14 14 0 0 1 11 5.3 l9 11.4 a6 6 0 0 0 4.7 2.3 h57.3 a14 14 0 0 1 14 14 v94 a14 14 0 0 1 -14 14 h-116 a14 14 0 0 1 -14 -14 z" fill="#FFFFFF" fill-opacity="0.42"/>
+  <rect x="48" y="104" width="160" height="96" rx="16" fill="url(#front)"/>
+  <g transform="translate(128 152)">
+    <g stroke="#2F5BEA" stroke-width="7" stroke-linecap="round">
+      <line x1="-12" y1="-33" x2="-12" y2="-25"/><line x1="0" y1="-33" x2="0" y2="-25"/><line x1="12" y1="-33" x2="12" y2="-25"/>
+      <line x1="-12" y1="25" x2="-12" y2="33"/><line x1="0" y1="25" x2="0" y2="33"/><line x1="12" y1="25" x2="12" y2="33"/>
+      <line x1="-33" y1="-12" x2="-25" y2="-12"/><line x1="-33" y1="0" x2="-25" y2="0"/><line x1="-33" y1="12" x2="-25" y2="12"/>
+      <line x1="25" y1="-12" x2="33" y2="-12"/><line x1="25" y1="0" x2="33" y2="0"/><line x1="25" y1="12" x2="33" y2="12"/>
+    </g>
+    <rect x="-24" y="-24" width="48" height="48" rx="9" fill="#2F5BEA"/>
+    <rect x="-11" y="-11" width="22" height="22" rx="4" fill="#FFFFFF"/>
+  </g>
+</svg>

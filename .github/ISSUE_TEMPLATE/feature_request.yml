@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest something DeviceDossier should collect or do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you need, and why?
+      description: Describe the audit or inventory task it would help with.
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where does Windows expose it?
+      description: Optional - a WMI class, registry key or command, if you know one.

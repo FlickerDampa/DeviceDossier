@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+dist/
+smoke/
+Audit History/
+DeviceDossier Reports/
+SysAudit Reports/
+IT_Audit_*.*
+*.settings.xml
+!config/*.settings.example.xml
+SysAudit.ini

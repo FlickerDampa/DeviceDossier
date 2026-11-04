@@ -1,0 +1,42 @@
+name: Bug report
+description: A value is wrong or missing, or DeviceDossier misbehaves
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please **remove serial numbers, product keys, MAC/IP addresses and user names** from anything you paste.
+  - type: input
+    id: version
+    attributes:
+      label: DeviceDossier version
+      placeholder: 1.0.0-beta.1
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows edition and build
+      placeholder: Windows 11 Pro 25H2 (26200.7019)
+    validations:
+      required: true
+  - type: dropdown
+    id: admin
+    attributes:
+      label: Run as administrator?
+      options: ["Yes", "No (limited mode)", "Silent / SYSTEM"]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+      description: For wrong values, name the section and field.
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log or error details
+      description: The live log, the --log file, or %TEMP%\DeviceDossier_error.log
+      render: text

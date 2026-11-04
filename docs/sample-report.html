@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="DeviceDossier 1.0.0-beta.1">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNEM4REZGIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMzczMEEzIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiIHJ4PSI1MiIgZmlsbD0idXJsKCNiZykiLz48cGF0aCBkPSJNNDAgNzIgYTE2IDE2IDAgMCAxIDE2IC0xNiBoNDQgbDIwIDIyIGg4MCBhMTYgMTYgMCAwIDEgMTYgMTYgdjIwIGgtMTc2IHoiIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC41NSIvPjxyZWN0IHg9IjMyIiB5PSIxMDAiIHdpZHRoPSIxOTIiIGhlaWdodD0iMTE2IiByeD0iMTgiIGZpbGw9IiNGRkZGRkYiLz48cmVjdCB4PSI5NCIgeT0iMTI0IiB3aWR0aD0iNjgiIGhlaWdodD0iNjgiIHJ4PSIxMiIgZmlsbD0iIzJGNUJFQSIvPjxyZWN0IHg9IjExNiIgeT0iMTQ2IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHJ4PSI0IiBmaWxsPSIjRkZGRkZGIi8+PC9zdmc+">
+<title>DEMO-LAPTOP-01 - Device Dossier</title>
+<style>
+:root{--bg:#f4f6fb;--surface:#fff;--surface-2:#f8fafc;--line:#e3e8f0;--text:#0f172a;--muted:#64748b;--accent:#2563eb;--accent-soft:#e8efff;--head:#0f1e3d;
+--ok:#15803d;--ok-soft:#e7f6ec;--warn:#b45309;--warn-soft:#fdf3e1;--err:#b91c1c;--err-soft:#fdeaea;--skip:#475569;--skip-soft:#eef1f5;--shadow:0 1px 2px rgba(15,23,42,.06),0 4px 14px rgba(15,23,42,.05);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0b1120;--surface:#111a2e;--surface-2:#0f1729;--line:#1f2b44;--text:#e5ebf5;--muted:#93a1b8;--accent:#5b8cff;--accent-soft:#18264a;--head:#060c1a;
+--ok:#4ade80;--ok-soft:#10291c;--warn:#fbbf24;--warn-soft:#2d2210;--err:#f87171;--err-soft:#341515;--skip:#a5b1c4;--skip-soft:#1a2236;--shadow:none;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 'Segoe UI',system-ui,-apple-system,Roboto,'Helvetica Neue',Arial,sans-serif}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;padding:18px max(16px,calc((100% - 1280px)/2));background:var(--head);color:#fff}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.2px}
+.title{flex:1 1 320px;min-width:0}
+h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.2px;overflow-wrap:anywhere}
+.meta{margin:2px 0 0;color:#b6c2d9;font-size:13px}
+.tools{display:flex;gap:8px;align-items:center;flex:0 1 auto}
+.search{position:relative;display:block}
+.search input{width:min(340px,62vw);padding:9px 96px 9px 12px;border-radius:8px;border:1px solid #2b3b5e;background:#16264a;color:#fff;font:inherit;outline:none}
+.search input::placeholder{color:#8fa0c0}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.35)}
+#hits{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:#8fa0c0;pointer-events:none}
+button{font:inherit;cursor:pointer}
+#print{padding:9px 14px;border-radius:8px;border:1px solid #2b3b5e;background:transparent;color:#fff;font-weight:600}
+#print:hover{background:#1a2c55}
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:4px;overflow-x:auto;padding:10px max(16px,calc((100% - 1280px)/2));background:var(--surface);border-bottom:1px solid var(--line);scrollbar-width:thin}
+.tabs button{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border:0;border-radius:999px;background:transparent;color:var(--muted);font-weight:600;font-size:13px;white-space:nowrap}
+.tabs button:hover{background:var(--surface-2);color:var(--text)}
+.tabs button[aria-selected=true]{background:var(--accent);color:#fff}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.dot.warn{background:var(--warn)}.dot.err{background:var(--err)}.dot.skip{background:var(--skip)}
+.tabs button[aria-selected=true] .dot{box-shadow:0 0 0 2px #fff}
+main{max-width:1280px;margin:0 auto;padding:22px 16px 40px}
+.panel{display:none}
+.panel.active{display:block}
+.panel-title{display:none}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:0 0 16px;box-shadow:var(--shadow)}
+.sec h2{margin:0 0 4px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px}
+.panel-title{margin:0 0 4px;font-size:17px;font-weight:700}
+.num{display:inline-grid;place-items:center;min-width:28px;height:22px;padding:0 6px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700}
+.sub{margin:0 0 10px;color:var(--muted);font-size:13px}
+h3{margin:18px 0 8px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sec>h2+h3,.sec>.sub+h3{margin-top:12px}
+.note{margin:8px 0;color:var(--muted);font-style:italic;font-size:13px}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:0 28px;margin:6px 0 4px}
+.kv>div{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:6px 0 4px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:700;color:var(--muted);font-size:12px;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--text)}
+th[data-sort]::after{content:' \2191';color:var(--accent)}
+th[data-sort=desc]::after{content:' \2193'}
+td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:break-word;min-width:90px;max-width:520px}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even) td{background:var(--surface-2)}
+tbody tr:hover td{background:var(--accent-soft)}
+.n{text-align:right;font-variant-numeric:tabular-nums}
+.kv dd.n{text-align:left}
+.na{color:var(--muted);font-weight:400}
+.bad{color:var(--err);font-weight:600}
+.record{border:1px solid var(--line);border-radius:10px;padding:4px 16px 8px;margin:8px 0 10px}
+.record h4{margin:10px 0 2px;font-size:14px;display:flex;align-items:center;gap:8px}
+.record h4 span{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px}
+.record .kv>div:last-child{border-bottom:0}
+.count{margin:6px 2px 0;color:var(--muted);font-size:12px}
+.banner{margin:8px 0 12px;padding:10px 14px;border-radius:8px;font-weight:600;font-size:13px}
+.banner.warn{background:var(--warn-soft);color:var(--warn)}
+.banner.err{background:var(--err-soft);color:var(--err)}
+.banner.skip{background:var(--skip-soft);color:var(--skip)}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.pill.warn{background:#f59e0b;color:#1f1300}
+.health{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.stat{padding:6px 12px;border-radius:999px;font-size:13px;background:var(--surface);border:1px solid var(--line)}
+.stat b{font-size:14px}
+.stat.ok b{color:var(--ok)}.stat.warn b{color:var(--warn)}.stat.err b{color:var(--err)}.stat.skip b{color:var(--skip)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:14px}
+.tile{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);min-width:0}
+.tile>div{min-width:0;display:flex;flex-direction:column}
+.tag{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);font-size:11px;letter-spacing:.03em}
+.tile small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tile strong{font-size:15px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:0}
+.mono{font-family:Consolas,'Cascadia Mono',ui-monospace,monospace;font-size:13px;overflow-wrap:anywhere}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+footer{max-width:1280px;margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:12px}
+body.searching .panel{display:block}
+body.searching #summary{display:none}
+body.searching .panel-title{display:block;margin:4px 0 10px}
+body.searching .tabs button[aria-selected=true]{background:transparent;color:var(--muted)}
+[hidden]{display:none!important}
+@media (max-width:640px){.top{padding-top:14px;padding-bottom:14px}.tools{width:100%}.search{flex:1}.search input{width:100%}.sec{padding:14px}.kv>div{grid-template-columns:1fr;gap:2px}}
+@media print{
+:root{--bg:#fff;--surface:#fff;--surface-2:#f6f7f9;--line:#d9dee7;--text:#000;--muted:#475569;--shadow:none;color-scheme:light}
+body{font-size:11px;background:#fff}
+.top{background:#fff;color:#000;padding:0 0 10px;border-bottom:2px solid #000}
+.meta{color:#333}
+.tools,.tabs,#none{display:none!important}
+main{max-width:none;padding:12px 0}
+.panel,body.searching .panel{display:block!important}
+.panel-title{display:block!important;font-size:15px;margin:16px 0 8px;break-after:avoid}
+.sec{border:0;border-top:1px solid #999;border-radius:0;padding:10px 0;box-shadow:none;break-inside:auto}
+.sec h2{break-after:avoid}
+.tbl{overflow:visible;border-radius:0}
+th{position:static}
+tr{break-inside:avoid}
+.tile{break-inside:avoid;box-shadow:none}
+footer{padding:12px 0 0}
+}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand"><svg viewBox="0 0 256 256" width="30" height="30" aria-hidden="true"><defs><linearGradient id="ddlogo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4C8DFF"/><stop offset="1" stop-color="#3730A3"/></linearGradient></defs><rect x="0" y="0" width="256" height="256" rx="52" fill="url(#ddlogo)"/><path d="M40 72 a16 16 0 0 1 16 -16 h44 l20 22 h80 a16 16 0 0 1 16 16 v20 h-176 z" fill="#FFFFFF" fill-opacity="0.55"/><rect x="32" y="100" width="192" height="116" rx="18" fill="#FFFFFF"/><rect x="94" y="124" width="68" height="68" rx="12" fill="#2F5BEA"/><rect x="116" y="146" width="24" height="24" rx="4" fill="#FFFFFF"/></svg><span>DeviceDossier</span></div>
+<div class="title"><h1>DEMO-LAPTOP-01</h1><p class="meta">Audited 04 Nov 2026, 10:30 &middot; run as CONTOSO\it.auditor (administrator) &middot; DeviceDossier 1.0.0-beta.1</p></div>
+<div class="tools"><label class="search"><input id="q" type="text" placeholder="Search the whole report" autocomplete="off"><span id="hits"></span></label><button type="button" id="print">Print / PDF</button></div>
+</header>
+<nav class="tabs" role="tablist">
+<button type="button" role="tab" data-tab="summary">Summary</button>
+<button type="button" role="tab" data-tab="system">System</button>
+<button type="button" role="tab" data-tab="windows">Windows</button>
+<button type="button" role="tab" data-tab="cpu">CPU</button>
+<button type="button" role="tab" data-tab="memory">Memory</button>
+<button type="button" role="tab" data-tab="graphics">Graphics</button>
+<button type="button" role="tab" data-tab="displays">Displays</button>
+<button type="button" role="tab" data-tab="storage">Storage</button>
+<button type="button" role="tab" data-tab="power">Power</button>
+<button type="button" role="tab" data-tab="network">Network</button>
+<button type="button" role="tab" data-tab="mapped-drives">Mapped drives</button>
+<button type="button" role="tab" data-tab="security">Security</button>
+<button type="button" role="tab" data-tab="software">Software</button>
+<button type="button" role="tab" data-tab="extensions">Extensions</button>
+</nav>
+<main>
+<section class="panel" id="summary" role="tabpanel">
+<div class="health"><span class="stat ok"><b>16</b> sections complete</span></div>
+<div class="tiles">
+<div class="tile"><b class="tag">TAG</b><div><small>Asset</small><strong title="IT-0042">IT-0042</strong><span title="Finance team &#183; HQ - Level 3">Finance team &#183; HQ - Level 3</span></div></div>
+<div class="tile"><b class="tag">PC</b><div><small>Device</small><strong title="LENOVO Legion Pro 7 16IRX8H">LENOVO Legion Pro 7 16IRX8H</strong><span title="Notebook &#183; S/N PF0DEMO1">Notebook &#183; S/N PF0DEMO1</span></div></div>
+<div class="tile"><b class="tag">OS</b><div><small>Windows</small><strong title="Windows 11 Pro">Windows 11 Pro</strong><span title="25H2 &#183; Licensed &#183; OEM:DM &#183; build 26200.7019">25H2 &#183; Licensed &#183; OEM:DM &#183; build 26200.7019</span></div></div>
+<div class="tile"><b class="tag">CPU</b><div><small>Processor</small><strong title="13th Gen Intel(R) Core(TM) i9-13900HX">13th Gen Intel(R) Core(TM) i9-13900HX</strong><span title="24 cores / 32 threads">24 cores / 32 threads</span></div></div>
+<div class="tile"><b class="tag">RAM</b><div><small>Memory</small><strong title="32 GB">32 GB</strong><span title="2 module(s) &#183; DDR5 5600 MHz">2 module(s) &#183; DDR5 5600 MHz</span></div></div>
+<div class="tile"><b class="tag">GPU</b><div><small>Graphics</small><strong title="Intel(R) UHD Graphics">Intel(R) UHD Graphics</strong><span title="+ NVIDIA GeForce RTX 4080 Laptop GPU">+ NVIDIA GeForce RTX 4080 Laptop GPU</span></div></div>
+<div class="tile"><b class="tag">MON</b><div><small>Displays</small><strong title="2 monitor(s)">2 monitor(s)</strong><span title="BOE display, MAG 255F E20">BOE display, MAG 255F E20</span></div></div>
+<div class="tile"><b class="tag">SSD</b><div><small>Storage</small><strong title="1.9 TB">1.9 TB</strong><span title="2 drive(s) &#183; health 100% (SSD wear-based)">2 drive(s) &#183; health 100% (SSD wear-based)</span></div></div>
+<div class="tile"><b class="tag">NET</b><div><small>Network</small><strong title="192.0.2.45">192.0.2.45</strong><span title="2 adapter(s)">2 adapter(s)</span></div></div>
+<div class="tile"><b class="tag">SEC</b><div><small>Antivirus</small><strong title="Microsoft Defender Antivirus">Microsoft Defender Antivirus</strong><span title="BitLocker on 1 of 1 volume(s)">BitLocker on 1 of 1 volume(s)</span></div></div>
+<div class="tile"><b class="tag">TPM</b><div><small>Platform security</small><strong title="Secure Boot On">Secure Boot On</strong><span title="TPM: Present - TPM 2.0, enabled, activated (INTC 600.18.27.2176)">TPM: Present - TPM 2.0, enabled, activated (INTC 600.18.27.2176)</span></div></div>
+<div class="tile"><b class="tag">ADM</b><div><small>Local administrators</small><strong title="2 account(s)">2 account(s)</strong><span title="DEMO-LAPTOP-01\Administrator, CONTOSO\Domain Admins">DEMO-LAPTOP-01\Administrator, CONTOSO\Domain Admins</span></div></div>
+<div class="tile"><b class="tag">APP</b><div><small>Installed software</small><strong title="14 apps">14 apps</strong><span title="Desktop and per-user programs">Desktop and per-user programs</span></div></div>
+<div class="tile"><b class="tag">EXT</b><div><small>Browser extensions</small><strong title="3 extensions">3 extensions</strong><span title="Chrome, Edge, Opera, Firefox">Chrome, Edge, Opera, Firefox</span></div></div>
+<div class="tile"><b class="tag">MAP</b><div><small>Mapped drives</small><strong title="2 mapping(s)">2 mapping(s)</strong><span title="All user profiles and sessions">All user profiles and sessions</span></div></div>
+</div>
+<h3>Latest security update</h3>
+<p class="card mono">2026-10 Cumulative Update for Windows 11 Version 25H2 for x64-based Systems - Installed: 15-10-2026</p>
+</section>
+<section class="panel" id="system" role="tabpanel">
+<h2 class="panel-title">System</h2>
+<article class="sec" id="sec-asset">
+<h2><span class="num">0</span>Asset Record</h2>
+<dl class="kv">
+<div data-row><dt>Asset Tag</dt><dd>IT-0042</dd></div>
+<div data-row><dt>Assigned To</dt><dd>Finance team</dd></div>
+<div data-row><dt>Location / Department</dt><dd>HQ - Level 3</dd></div>
+<div data-row><dt>Notes</dt><dd>Annual audit 2026</dd></div>
+</dl>
+</article>
+<article class="sec" id="sec-device">
+<h2><span class="num">1</span>Device Information</h2>
+<dl class="kv">
+<div data-row><dt>Device Type</dt><dd>Notebook</dd></div>
+<div data-row><dt>Device Name</dt><dd>DEMO-LAPTOP-01</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>LENOVO</dd></div>
+<div data-row><dt>Model</dt><dd>82WQ</dd></div>
+<div data-row><dt>Domain / Workgroup</dt><dd>contoso.local</dd></div>
+<div data-row><dt>BIOS Serial Number</dt><dd>PF0DEMO1</dd></div>
+<div data-row><dt>BIOS Version</dt><dd>KWCN54WW</dd></div>
+<div data-row><dt>BIOS Release Date</dt><dd>22-10-2025</dd></div>
+<div data-row><dt>Model Name</dt><dd>Legion Pro 7 16IRX8H</dd></div>
+<div data-row><dt>System UUID</dt><dd>3F2504E0-4F89-11D3-9A0C-0305E82C3301</dd></div>
+<div data-row><dt>Asset Tag</dt><dd><span class="na">N/A</span></dd></div>
+</dl>
+</article>
+<article class="sec" id="sec-motherboard">
+<h2><span class="num">6b</span>Motherboard Details</h2>
+<dl class="kv">
+<div data-row><dt>Manufacturer</dt><dd>LENOVO</dd></div>
+<div data-row><dt>Model / Product</dt><dd>LNVNB161216</dd></div>
+<div data-row><dt>Serial Number</dt><dd>PF0DEMO1</dd></div>
+<div data-row><dt>Version</dt><dd>SDK0T76462 WIN</dd></div>
+<div data-row><dt>Status</dt><dd>OK</dd></div>
+</dl>
+</article>
+</section>
+<section class="panel" id="windows" role="tabpanel">
+<h2 class="panel-title">Windows</h2>
+<article class="sec" id="sec-os">
+<h2><span class="num">2</span>Operating System And Activation</h2>
+<dl class="kv">
+<div data-row><dt>OS Name</dt><dd>Microsoft Windows 11 Pro</dd></div>
+<div data-row><dt>Version</dt><dd>10.0.26200</dd></div>
+<div data-row><dt>Build Number</dt><dd>26200.7019</dd></div>
+<div data-row><dt>Architecture</dt><dd>64-bit</dd></div>
+<div data-row><dt>Install Date</dt><dd>02-01-2025</dd></div>
+<div data-row><dt>Last Boot</dt><dd>29-10-2026 09:35</dd></div>
+<div data-row><dt>Registered User</dt><dd><span class="na">N/A</span></dd></div>
+<div data-row><dt>Activation Status</dt><dd>Licensed</dd></div>
+<div data-row><dt>Windows Key</dt><dd>XXXXX-XXXXX-XXXXX-XXXXX-DEMO1</dd></div>
+<div data-row><dt>Product Key Ch.</dt><dd>OEM:DM</dd></div>
+<div data-row><dt>Display Version</dt><dd>25H2</dd></div>
+</dl>
+</article>
+</section>
+<section class="panel" id="cpu" role="tabpanel">
+<h2 class="panel-title">CPU</h2>
+<article class="sec" id="sec-cpu">
+<h2><span class="num">3</span>Processor (CPU) Details</h2>
+<div class="record"><dl class="kv">
+<div data-row><dt>CPU Model</dt><dd>13th Gen Intel(R) Core(TM) i9-13900HX</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>GenuineIntel</dd></div>
+<div data-row><dt>Cores</dt><dd>24</dd></div>
+<div data-row><dt>Logical Processors</dt><dd>32</dd></div>
+<div data-row><dt>Max Speed (MHz)</dt><dd>2200</dd></div>
+<div data-row><dt>Current Speed (MHz)</dt><dd>2200</dd></div>
+<div data-row><dt>CPU ID / Serial</dt><dd>BFEBFBFF000B0671</dd></div>
+<div data-row><dt>Socket</dt><dd>U3E1</dd></div>
+<div data-row><dt>Architecture</dt><dd>x64</dd></div>
+<div data-row><dt>L2 Cache (KB)</dt><dd>32768</dd></div>
+<div data-row><dt>L3 Cache (KB)</dt><dd>36864</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="memory" role="tabpanel">
+<h2 class="panel-title">Memory</h2>
+<article class="sec" id="sec-ram">
+<h2><span class="num">4</span>RAM Details</h2>
+<p class="sub">Total: 32 GB - Sticks: 2</p>
+<div class="record"><h4><span>1</span>1</h4><dl class="kv">
+<div data-row><dt>Stick No.</dt><dd>1</dd></div>
+<div data-row><dt>Capacity (GB)</dt><dd>16</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>Samsung</dd></div>
+<div data-row><dt>Part Number</dt><dd>M425R2GA3BB0-CWMOD</dd></div>
+<div data-row><dt>Serial Number</dt><dd>DEMO0001</dd></div>
+<div data-row><dt>Speed (MHz)</dt><dd>5600</dd></div>
+<div data-row><dt>Memory Type</dt><dd>DDR5</dd></div>
+<div data-row><dt>Slot / Location</dt><dd>Controller0-ChannelA-DIMM0</dd></div>
+<div data-row><dt>Bank</dt><dd>BANK 0</dd></div>
+<div data-row><dt>Form Factor</dt><dd>SO-DIMM</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>2</h4><dl class="kv">
+<div data-row><dt>Stick No.</dt><dd>2</dd></div>
+<div data-row><dt>Capacity (GB)</dt><dd>16</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>Samsung</dd></div>
+<div data-row><dt>Part Number</dt><dd>M425R2GA3BB0-CWMOD</dd></div>
+<div data-row><dt>Serial Number</dt><dd>DEMO0002</dd></div>
+<div data-row><dt>Speed (MHz)</dt><dd>5600</dd></div>
+<div data-row><dt>Memory Type</dt><dd>DDR5</dd></div>
+<div data-row><dt>Slot / Location</dt><dd>Controller1-ChannelA-DIMM0</dd></div>
+<div data-row><dt>Bank</dt><dd>BANK 0</dd></div>
+<div data-row><dt>Form Factor</dt><dd>SO-DIMM</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="graphics" role="tabpanel">
+<h2 class="panel-title">Graphics</h2>
+<article class="sec" id="sec-gpu">
+<h2><span class="num">5</span>GPU Details</h2>
+<div class="record"><h4><span>1</span>Intel(R) UHD Graphics</h4><dl class="kv">
+<div data-row><dt>GPU Name</dt><dd>Intel(R) UHD Graphics</dd></div>
+<div data-row><dt>VRAM</dt><dd>2</dd></div>
+<div data-row><dt>Driver Version</dt><dd>32.0.101.7092</dd></div>
+<div data-row><dt>Driver Date</dt><dd>03-09-2026</dd></div>
+<div data-row><dt>Video Proc</dt><dd>Intel(R) RaptorLake-S Mobile Graphics Controller</dd></div>
+<div data-row><dt>Resolution</dt><dd>2560 x 1600</dd></div>
+<div data-row><dt>Refresh Rate</dt><dd>240 Hz</dd></div>
+<div data-row><dt>Device ID (DEV)</dt><dd>A788</dd></div>
+<div data-row><dt>Vendor ID (VEN)</dt><dd>8086</dd></div>
+<div data-row><dt>GPU-UUID</dt><dd><span class="na">N/A - GPU-UUID is an NVIDIA-specific identifier (via nvidia-smi); not available for this GPU/vendor</span></dd></div>
+<div data-row><dt>VBIOS Version</dt><dd>Intel Video BIOS</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>NVIDIA GeForce RTX 4080 Laptop GPU</h4><dl class="kv">
+<div data-row><dt>GPU Name</dt><dd>NVIDIA GeForce RTX 4080 Laptop GPU</dd></div>
+<div data-row><dt>VRAM</dt><dd>11.99</dd></div>
+<div data-row><dt>Driver Version</dt><dd>32.0.16.1742</dd></div>
+<div data-row><dt>Driver Date</dt><dd>30-09-2026</dd></div>
+<div data-row><dt>Video Proc</dt><dd>NVIDIA GeForce RTX 4080 Laptop GPU</dd></div>
+<div data-row><dt>Resolution</dt><dd>1920 x 1080</dd></div>
+<div data-row><dt>Refresh Rate</dt><dd>200 Hz</dd></div>
+<div data-row><dt>Device ID (DEV)</dt><dd>27E0</dd></div>
+<div data-row><dt>Vendor ID (VEN)</dt><dd>10DE</dd></div>
+<div data-row><dt>GPU-UUID</dt><dd>GPU-00000000-1111-2222-3333-444444444444</dd></div>
+<div data-row><dt>VBIOS Version</dt><dd>95.04.3c.00.4c</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="displays" role="tabpanel">
+<h2 class="panel-title">Displays</h2>
+<article class="sec" id="sec-monitors">
+<h2><span class="num">11</span>Monitors / Displays</h2>
+<div class="record"><h4><span>1</span>BOE display</h4><dl class="kv">
+<div data-row><dt>Monitor</dt><dd>BOE display</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>BOE (BOE)</dd></div>
+<div data-row><dt>Product Code</dt><dd>0B8B</dd></div>
+<div data-row><dt>Serial Number</dt><dd><span class="na">N/A</span></dd></div>
+<div data-row><dt>Manufactured</dt><dd>Week 11, 2022</dd></div>
+<div data-row><dt>Size</dt><dd>15.9&quot; (34 x 22 cm)</dd></div>
+<div data-row><dt>Connection</dt><dd>Internal panel</dd></div>
+<div data-row><dt>Active</dt><dd>Yes</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>MAG 255F E20</h4><dl class="kv">
+<div data-row><dt>Monitor</dt><dd>MAG 255F E20</dd></div>
+<div data-row><dt>Manufacturer</dt><dd>MSI (MSI)</dd></div>
+<div data-row><dt>Product Code</dt><dd>5BC2</dd></div>
+<div data-row><dt>Serial Number</dt><dd>DEMO24000123</dd></div>
+<div data-row><dt>Manufactured</dt><dd>Week 6, 2025</dd></div>
+<div data-row><dt>Size</dt><dd>24.5&quot; (54 x 31 cm)</dd></div>
+<div data-row><dt>Connection</dt><dd>HDMI</dd></div>
+<div data-row><dt>Active</dt><dd>Yes</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="storage" role="tabpanel">
+<h2 class="panel-title">Storage</h2>
+<article class="sec" id="sec-storage">
+<h2><span class="num">6</span>Storage / Drives</h2>
+<div class="record"><h4><span>1</span>SKHynix_HFS001TEJ9X115N</h4><dl class="kv">
+<div data-row><dt>Drive Model</dt><dd>SKHynix_HFS001TEJ9X115N</dd></div>
+<div data-row><dt>Serial Number</dt><dd>0025_388A_91B2_DEMO</dd></div>
+<div data-row><dt>Size (GB)</dt><dd>953.86</dd></div>
+<div data-row><dt>Interface</dt><dd>NVMe</dd></div>
+<div data-row><dt>Media Type</dt><dd>SSD</dd></div>
+<div data-row><dt>Partitions</dt><dd>3</dd></div>
+<div data-row><dt>Firmware</dt><dd>51020A12</dd></div>
+<div data-row><dt>Health (%)</dt><dd>100% (SSD wear-based)</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>KINGSTON SKC3000S1024G</h4><dl class="kv">
+<div data-row><dt>Drive Model</dt><dd>KINGSTON SKC3000S1024G</dd></div>
+<div data-row><dt>Serial Number</dt><dd>50026B7685DEMO02</dd></div>
+<div data-row><dt>Size (GB)</dt><dd>953.86</dd></div>
+<div data-row><dt>Interface</dt><dd>NVMe</dd></div>
+<div data-row><dt>Media Type</dt><dd>SSD</dd></div>
+<div data-row><dt>Partitions</dt><dd>2</dd></div>
+<div data-row><dt>Firmware</dt><dd>EIFK31.6</dd></div>
+<div data-row><dt>Health (%)</dt><dd>100% (SSD wear-based)</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="power" role="tabpanel">
+<h2 class="panel-title">Power</h2>
+<article class="sec" id="sec-power">
+<h2><span class="num">6c</span>Battery Details</h2>
+<div class="record"><dl class="kv">
+<div data-row><dt>Battery Name</dt><dd>L22M4PC1</dd></div>
+<div data-row><dt>Device ID</dt><dd>DEMO-BATTERY</dd></div>
+<div data-row><dt>Health (%)</dt><dd>88.1%</dd></div>
+<div data-row><dt>Design Capacity (mWh)</dt><dd>99900</dd></div>
+<div data-row><dt>Full Charge Capacity (mWh)</dt><dd>88030</dd></div>
+<div data-row><dt>Current Charge (%)</dt><dd>75</dd></div>
+<div data-row><dt>Status</dt><dd>On AC power, not charging</dd></div>
+<div data-row><dt>Design Voltage (mV)</dt><dd>16549</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="network" role="tabpanel">
+<h2 class="panel-title">Network</h2>
+<article class="sec" id="sec-network">
+<h2><span class="num">7</span>Network Adapters And MAC Addresses</h2>
+<p class="note">4 virtual adapter(s) without an IP address are not listed (for example WAN Miniport and Wi-Fi Direct).</p>
+<div class="record"><h4><span>1</span>Intel(R) Wi-Fi 6E AX211 160MHz</h4><dl class="kv">
+<div data-row><dt>Adapter</dt><dd>Intel(R) Wi-Fi 6E AX211 160MHz</dd></div>
+<div data-row><dt>MAC Address</dt><dd>02:00:5E:10:00:01</dd></div>
+<div data-row><dt>IP Address</dt><dd>192.0.2.45</dd></div>
+<div data-row><dt>Subnet</dt><dd>255.255.255.0</dd></div>
+<div data-row><dt>Gateway</dt><dd>192.0.2.1</dd></div>
+<div data-row><dt>DHCP</dt><dd>Yes</dd></div>
+<div data-row><dt>DNS</dt><dd>192.0.2.1</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>Realtek PCIe GbE Family Controller</h4><dl class="kv">
+<div data-row><dt>Adapter</dt><dd>Realtek PCIe GbE Family Controller</dd></div>
+<div data-row><dt>MAC Address</dt><dd>02:00:5E:10:00:02</dd></div>
+<div data-row><dt>IP Address</dt><dd><span class="na">&ndash;</span></dd></div>
+<div data-row><dt>Subnet</dt><dd><span class="na">&ndash;</span></dd></div>
+<div data-row><dt>Gateway</dt><dd><span class="na">&ndash;</span></dd></div>
+<div data-row><dt>DHCP</dt><dd>Yes</dd></div>
+<div data-row><dt>DNS</dt><dd><span class="na">&ndash;</span></dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="mapped-drives" role="tabpanel">
+<h2 class="panel-title">Mapped drives</h2>
+<article class="sec" id="sec-drives">
+<h2><span class="num">8</span>Mapped Network Drives (Server Audit)</h2>
+<p class="note">Known servers checked: 192.0.2.10</p>
+<div class="record"><h4><span>1</span>it.auditor</h4><dl class="kv">
+<div data-row><dt>User Profile</dt><dd>it.auditor</dd></div>
+<div data-row><dt>Drive Letter</dt><dd>P:</dd></div>
+<div data-row><dt>Status</dt><dd>Configured (user currently logged on)</dd></div>
+<div data-row><dt>Server IP</dt><dd>192.0.2.10</dd></div>
+<div data-row><dt>Matches Known Server List</dt><dd>Yes - Main file server</dd></div>
+<div data-row><dt>Subfolder Path</dt><dd>Projects</dd></div>
+<div data-row><dt>Full UNC Path</dt><dd>\\192.0.2.10\Projects</dd></div>
+</dl></div>
+<div class="record"><h4><span>2</span>finance.user</h4><dl class="kv">
+<div data-row><dt>User Profile</dt><dd>finance.user</dd></div>
+<div data-row><dt>Drive Letter</dt><dd>S:</dd></div>
+<div data-row><dt>Status</dt><dd>Configured (user logged off - read from profile)</dd></div>
+<div data-row><dt>Server IP</dt><dd>192.0.2.10</dd></div>
+<div data-row><dt>Matches Known Server List</dt><dd>Yes - Main file server</dd></div>
+<div data-row><dt>Subfolder Path</dt><dd>Shared\Finance</dd></div>
+<div data-row><dt>Full UNC Path</dt><dd>\\192.0.2.10\Shared\Finance</dd></div>
+</dl></div>
+</article>
+</section>
+<section class="panel" id="security" role="tabpanel">
+<h2 class="panel-title">Security</h2>
+<article class="sec" id="sec-security">
+<h2><span class="num">9</span>Security</h2>
+<h3>Installed EDR / Antivirus</h3>
+<div class="tbl"><table>
+<thead><tr><th scope="col">Product Name</th><th scope="col">Details</th></tr></thead>
+<tbody>
+<tr data-row><td>Microsoft Defender Antivirus</td><td>Registered with Windows Security Center | Real-time protection: On | Antimalware service: On | Mode: Normal</td></tr>
+</tbody></table></div>
+<h3>BitLocker Status</h3>
+<div class="tbl"><table>
+<thead><tr><th scope="col">Drive</th><th scope="col">Protection Status</th><th scope="col">Volume Status</th><th scope="col">Encryption %</th><th scope="col">Key Protector(s)</th></tr></thead>
+<tbody>
+<tr data-row><td>C:</td><td>On</td><td>FullyEncrypted</td><td>100%</td><td>Tpm, RecoveryPassword</td></tr>
+</tbody></table></div>
+<h3>Patch &amp; Update Level</h3>
+<dl class="kv">
+<div data-row><dt>Latest Security Update</dt><dd>2026-10 Cumulative Update for Windows 11 Version 25H2 for x64-based Systems - Installed: 15-10-2026</dd></div>
+<div data-row><dt>Latest Feature Update</dt><dd><span class="na">N/A - none found in update history</span></dd></div>
+<div data-row><dt>Latest Windows (Quality) Update</dt><dd>2025-10 Cumulative Update for .NET Framework 3.5 and 4.8.1 for Windows 11, version 24H2 for x64 (KB5066131) - Installed: 29-10-2025</dd></div>
+<div data-row><dt>Latest General/Suite Update</dt><dd>Update for Windows Security platform - KB5007651 (Version 10.0.29680.1000) - Current Channel (Broad) - Installed: 30-10-2026</dd></div>
+</dl>
+<h3>Local Administrative Accounts</h3>
+<div class="tbl"><table>
+<thead><tr><th scope="col">Account Name</th><th scope="col">Type</th><th scope="col">Source</th></tr></thead>
+<tbody>
+<tr data-row><td>DEMO-LAPTOP-01\Administrator</td><td>User</td><td>Local</td></tr>
+<tr data-row><td>CONTOSO\Domain Admins</td><td>Group</td><td>Domain</td></tr>
+</tbody></table></div>
+</article>
+<article class="sec" id="sec-baseline">
+<h2><span class="num">12</span>Security Baseline</h2>
+<dl class="kv">
+<div data-row><dt>Firmware Type</dt><dd>UEFI</dd></div>
+<div data-row><dt>Secure Boot</dt><dd>On</dd></div>
+<div data-row><dt>TPM</dt><dd>Present - TPM 2.0, enabled, activated (INTC 600.18.27.2176)</dd></div>
+<div data-row><dt>Firewall - Domain Profile</dt><dd>On</dd></div>
+<div data-row><dt>Firewall - Private Profile</dt><dd>On</dd></div>
+<div data-row><dt>Firewall - Public Profile</dt><dd>On</dd></div>
+<div data-row><dt>User Account Control</dt><dd>On</dd></div>
+<div data-row><dt>Remote Desktop</dt><dd>Disabled</dd></div>
+<div data-row><dt>SMBv1 Protocol</dt><dd>Disabled</dd></div>
+<div data-row><dt>Guest Account</dt><dd>Disabled</dd></div>
+<div data-row><dt>Defender Signatures</dt><dd>1.463.115.0 (updated 04-11-2026)</dd></div>
+<div data-row><dt>Pending Restart</dt><dd>No</dd></div>
+</dl>
+</article>
+</section>
+<section class="panel" id="software" role="tabpanel">
+<h2 class="panel-title">Software</h2>
+<article class="sec" id="sec-software">
+<h2><span class="num">10</span>Installed Software</h2>
+<p class="sub">Total: 14 apps</p>
+<div class="tbl"><table>
+<thead><tr><th scope="col">No.</th><th scope="col">Software Name</th><th scope="col">Version</th><th scope="col">Publisher</th><th scope="col">Install Date</th><th scope="col">Install Location</th></tr></thead>
+<tbody>
+<tr data-row><td class="n">1</td><td>7-Zip 24.08 (x64)</td><td>24.08</td><td>Igor Pavlov</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">2</td><td>Adobe Acrobat (64-bit)</td><td>25.001.20844</td><td>Adobe</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">3</td><td>AutoCAD LT 2024</td><td>24.3.61.0</td><td>Autodesk</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">4</td><td>Google Chrome</td><td>131.0.6778.86</td><td>Google LLC</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">5</td><td>Microsoft 365 Apps for business - en-us</td><td>16.0.18129.20158</td><td>Microsoft Corporation</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">6</td><td>Microsoft Edge</td><td>131.0.2903.70</td><td>Microsoft Corporation</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">7</td><td>Microsoft Teams</td><td>24295.605.3225.8804</td><td>Microsoft Corporation</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">8</td><td>Microsoft Visual C++ 2015-2022 Redistributable (x64)</td><td>14.42.34433</td><td>Microsoft Corporation</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">9</td><td>Mozilla Firefox (x64 en-US)</td><td>133.0</td><td>Mozilla</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">10</td><td>Notepad++ (64-bit x64)</td><td>8.7.1</td><td>Notepad++ Team</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">11</td><td>NVIDIA Graphics Driver 566.14</td><td>566.14</td><td>NVIDIA Corporation</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">12</td><td>QGIS 3.34.12</td><td>3.34.12</td><td>QGIS.org</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">13</td><td>VLC media player</td><td>3.0.21</td><td>VideoLAN</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+<tr data-row><td class="n">14</td><td>Zoom Workplace (64-bit)</td><td>6.2.11</td><td>Zoom Communications, Inc.</td><td>12-03-2026</td><td><span class="na">N/A</span></td></tr>
+</tbody></table></div>
+<p class="count">14 rows</p>
+</article>
+</section>
+<section class="panel" id="extensions" role="tabpanel">
+<h2 class="panel-title">Extensions</h2>
+<article class="sec" id="sec-extensions">
+<h2><span class="num">10b</span>Browser Extensions</h2>
+<p class="sub">Total: 3</p>
+<div class="tbl"><table>
+<thead><tr><th scope="col">Browser</th><th scope="col">User Profile</th><th scope="col">Extension Name</th><th scope="col">Version</th><th scope="col">Extension ID</th></tr></thead>
+<tbody>
+<tr data-row><td>Chrome</td><td>it.auditor</td><td>Google Docs Offline</td><td>1.86.1</td><td>ghbmnnjooekpmoecnnnilnnbdlolhkhi</td></tr>
+<tr data-row><td>Edge</td><td>it.auditor</td><td>Microsoft Editor</td><td>1.42.0</td><td>hokifickgkhplphjiodbggjmoafhignh</td></tr>
+<tr data-row><td>Firefox</td><td>finance.user</td><td>uBlock Origin</td><td>1.61.0</td><td>uBlock0@raymondhill.net</td></tr>
+</tbody></table></div>
+</article>
+</section>
+<p id="none" class="empty" hidden>Nothing in this report matches your search.</p>
+</main>
+<footer>Generated by DeviceDossier 1.0.0-beta.1 on 04 Nov 2026, 10:30. This file is a point-in-time snapshot of DEMO-LAPTOP-01 and contains sensitive inventory data - store and share it accordingly.</footer>
+<script>
+(function(){
+var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
+var panels=[].slice.call(document.querySelectorAll('.panel'));
+function show(id,push){
+if(!document.getElementById(id))id='summary';
+tabs.forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-tab')===id?'true':'false');});
+panels.forEach(function(p){p.classList.toggle('active',p.id===id);});
+if(push&&history.replaceState)history.replaceState(null,'','#'+id);
+}
+tabs.forEach(function(b){b.addEventListener('click',function(){q.value='';search();show(b.getAttribute('data-tab'),true);window.scrollTo(0,0);});});
+var q=document.getElementById('q'),hits=document.getElementById('hits'),none=document.getElementById('none');
+var rows=[].slice.call(document.querySelectorAll('[data-row]'));
+var secs=[].slice.call(document.querySelectorAll('.sec'));
+function search(){
+var v=q.value.trim().toLowerCase(),n=0;
+document.body.classList.toggle('searching',v.length>0);
+rows.forEach(function(r){var hit=!v||r.textContent.toLowerCase().indexOf(v)>=0;r.hidden=!hit;if(v&&hit)n++;});
+secs.forEach(function(s){s.hidden=!!v&&!s.querySelector('[data-row]:not([hidden])');});
+panels.forEach(function(p){if(p.id!=='summary')p.hidden=!!v&&!p.querySelector('.sec:not([hidden])');});
+hits.textContent=v?n+(n===1?' match':' matches'):'';
+none.hidden=!v||n>0;
+}
+q.addEventListener('input',search);
+q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';search();}});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus();}});
+document.getElementById('print').addEventListener('click',function(){window.print();});
+[].slice.call(document.querySelectorAll('th')).forEach(function(th){
+th.addEventListener('click',function(){
+var table=th.closest('table'),body=table.tBodies[0],i=[].indexOf.call(th.parentNode.children,th);
+var dir=th.getAttribute('data-sort')==='asc'?'desc':'asc';
+[].forEach.call(th.parentNode.children,function(h){h.removeAttribute('data-sort');});
+th.setAttribute('data-sort',dir);
+var list=[].slice.call(body.rows);
+list.sort(function(a,b){
+var x=a.cells[i].textContent.trim(),y=b.cells[i].textContent.trim();
+var nx=parseFloat(x.replace(/,/g,'')),ny=parseFloat(y.replace(/,/g,''));
+var c=(!isNaN(nx)&&!isNaN(ny)&&/^[\d.,\s-]+$/.test(x)&&/^[\d.,\s-]+$/.test(y))?nx-ny:x.localeCompare(y,undefined,{numeric:true,sensitivity:'base'});
+return dir==='asc'?c:-c;});
+list.forEach(function(r){body.appendChild(r);});
+});});
+window.addEventListener('beforeprint',function(){if(q.value){q.value='';search();}});
+show((location.hash||'#summary').slice(1),false);
+})();
+</script>
+</body>
+</html>

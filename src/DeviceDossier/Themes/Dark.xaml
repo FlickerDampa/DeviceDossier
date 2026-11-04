@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="AppBackground" Color="#0A101D"/>
+    <SolidColorBrush x:Key="Surface" Color="#111A2C"/>
+    <SolidColorBrush x:Key="SurfaceAlt" Color="#0E1626"/>
+    <SolidColorBrush x:Key="SurfaceHover" Color="#18233A"/>
+    <SolidColorBrush x:Key="SurfacePressed" Color="#1F2C47"/>
+    <SolidColorBrush x:Key="InputBackground" Color="#0C1424"/>
+    <SolidColorBrush x:Key="BorderBrush" Color="#1E2A42"/>
+    <SolidColorBrush x:Key="BorderStrong" Color="#2E3D5C"/>
+    <SolidColorBrush x:Key="TextPrimary" Color="#E6ECF5"/>
+    <SolidColorBrush x:Key="TextMuted" Color="#94A3B8"/>
+    <SolidColorBrush x:Key="TextSubtle" Color="#64748B"/>
+    <SolidColorBrush x:Key="Accent" Color="#3B82F6"/>
+    <SolidColorBrush x:Key="AccentHover" Color="#60A5FA"/>
+    <SolidColorBrush x:Key="AccentPressed" Color="#2563EB"/>
+    <SolidColorBrush x:Key="AccentSoft" Color="#162847"/>
+    <SolidColorBrush x:Key="AccentText" Color="#93C0FF"/>
+    <SolidColorBrush x:Key="OnAccent" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="Sidebar" Color="#070C17"/>
+    <SolidColorBrush x:Key="SidebarHover" Color="#111B30"/>
+    <SolidColorBrush x:Key="SidebarActive" Color="#16264A"/>
+    <SolidColorBrush x:Key="SidebarText" Color="#C7D2E6"/>
+    <SolidColorBrush x:Key="SidebarMuted" Color="#66758F"/>
+    <SolidColorBrush x:Key="SidebarBorder" Color="#141E33"/>
+    <SolidColorBrush x:Key="Success" Color="#4ADE80"/>
+    <SolidColorBrush x:Key="SuccessSoft" Color="#0F2A1C"/>
+    <SolidColorBrush x:Key="Warning" Color="#FBBF24"/>
+    <SolidColorBrush x:Key="WarningSoft" Color="#2B2111"/>
+    <SolidColorBrush x:Key="WarningBorder" Color="#5A4317"/>
+    <SolidColorBrush x:Key="OnWarning" Color="#1F1300"/>
+    <SolidColorBrush x:Key="Danger" Color="#F87171"/>
+    <SolidColorBrush x:Key="DangerSoft" Color="#341616"/>
+    <SolidColorBrush x:Key="Neutral" Color="#1A2337"/>
+    <SolidColorBrush x:Key="Info" Color="#A5B1C4"/>
+    <SolidColorBrush x:Key="ProgressTrack" Color="#1D2943"/>
+    <SolidColorBrush x:Key="GridLine" Color="#19243B"/>
+    <SolidColorBrush x:Key="HeaderBackground" Color="#0F1828"/>
+    <SolidColorBrush x:Key="ScrollThumb" Color="#2E3C5A"/>
+    <SolidColorBrush x:Key="ScrollThumbHover" Color="#46587E"/>
+
+</ResourceDictionary>

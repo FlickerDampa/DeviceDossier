@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DeviceDossierSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SaveLocation>Desktop</SaveLocation>
+  <ReportFolderName>DeviceDossier Reports</ReportFolderName>
+  <FileNamePrefix>IT_Audit</FileNamePrefix>
+  <ExportExcel>true</ExportExcel>
+  <ExportHtml>true</ExportHtml>
+  <ExportXml>false</ExportXml>
+  <IncludeMappedDrives>true</IncludeMappedDrives>
+  <IncludeSecurity>true</IncludeSecurity>
+  <IncludePatchHistory>true</IncludePatchHistory>
+  <IncludeSoftware>true</IncludeSoftware>
+  <IncludeBrowserExtensions>true</IncludeBrowserExtensions>
+  <RequestAdminAtStartup>true</RequestAdminAtStartup>
+  <MaskProductKey>true</MaskProductKey>
+  <ExcludeToolDrive>true</ExcludeToolDrive>
+  <PatchTimeoutSeconds>60</PatchTimeoutSeconds>
+  <StepTimeoutSeconds>180</StepTimeoutSeconds>
+  <Theme>System</Theme>
+  <KnownServers>
+    <Server Address="192.0.2.10" Label="Main file server" />
+    <Server Address="nas01" Label="Backup NAS" />
+  </KnownServers>
+  <ExcludedDiskModels />
+</DeviceDossierSettings>

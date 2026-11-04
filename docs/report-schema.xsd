@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:element name="DeviceDossierReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Section" type="SectionType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="schema" type="xs:positiveInteger" use="required"/>
+      <xs:attribute name="tool" type="xs:string" use="required"/>
+      <xs:attribute name="generated" type="xs:dateTime" use="required"/>
+      <xs:attribute name="device" type="xs:string" use="required"/>
+      <xs:attribute name="runAs" type="xs:string" use="required"/>
+      <xs:attribute name="administrator" type="xs:boolean" use="required"/>
+      <xs:attribute name="laptop" type="xs:boolean" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="SectionType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="Fields" type="FieldsType"/>
+      <xs:element name="Table" type="TableType"/>
+    </xs:choice>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="number" type="xs:string" use="required"/>
+    <xs:attribute name="title" type="xs:string" use="required"/>
+    <xs:attribute name="state" type="StateType" use="required"/>
+    <xs:attribute name="note" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="FieldsType">
+    <xs:sequence>
+      <xs:element name="Field" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="name" type="xs:string" use="required"/>
+              <xs:attribute name="type" type="ValueType"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="CaptionAttributes"/>
+  </xs:complexType>
+
+  <xs:complexType name="TableType">
+    <xs:sequence>
+      <xs:element name="Columns">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Column" type="xs:string" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Row" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Cell" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                    <xs:attribute name="column" type="xs:string" use="required"/>
+                    <xs:attribute name="type" type="ValueType"/>
+                  </xs:extension>
+                </xs:simpleContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attributeGroup ref="CaptionAttributes"/>
+  </xs:complexType>
+
+  <xs:attributeGroup name="CaptionAttributes">
+    <xs:attribute name="caption" type="xs:string"/>
+    <xs:attribute name="captionStyle">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None"/>
+          <xs:enumeration value="Bold"/>
+          <xs:enumeration value="Italic"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+
+  <xs:simpleType name="StateType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ok"/>
+      <xs:enumeration value="Warning"/>
+      <xs:enumeration value="Error"/>
+      <xs:enumeration value="Skipped"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ValueType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="number"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
