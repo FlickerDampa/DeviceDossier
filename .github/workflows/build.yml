@@ -68,20 +68,20 @@ jobs:
           $p = Start-Process -FilePath "dist/DeviceDossier/DeviceDossier.exe" -ArgumentList @("--silent", "--formats", "nonsense") -Wait -PassThru
           if ($p.ExitCode -ne 2) { throw "Expected exit code 2 for invalid arguments, got $($p.ExitCode)" }
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: DeviceDossier
           path: |
             dist/DeviceDossier/
             dist/SHA256SUMS.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: smoke-test-reports
           path: smoke/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           name: release-files
