@@ -14,7 +14,7 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install Mono, openpyxl and lxml
         run: |
           sudo apt-get update -q
@@ -29,9 +29,9 @@ jobs:
     runs-on: windows-latest
     needs: checks
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.0.x
 
@@ -68,20 +68,20 @@ jobs:
           $p = Start-Process -FilePath "dist/DeviceDossier/DeviceDossier.exe" -ArgumentList @("--silent", "--formats", "nonsense") -Wait -PassThru
           if ($p.ExitCode -ne 2) { throw "Expected exit code 2 for invalid arguments, got $($p.ExitCode)" }
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: DeviceDossier
           path: |
             dist/DeviceDossier/
             dist/SHA256SUMS.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: smoke-test-reports
           path: smoke/
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           name: release-files
@@ -96,8 +96,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           name: release-files
           path: release
@@ -106,6 +106,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$TAG" release/DeviceDossier.zip release/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber
+            exit 0
+          fi
           flags=""
           case "$TAG" in *-*) flags="--prerelease" ;; esac
           gh release create "$TAG" release/DeviceDossier.zip release/SHA256SUMS.txt --title "DeviceDossier $TAG" --generate-notes $flags
