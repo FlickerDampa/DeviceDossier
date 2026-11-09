@@ -17,6 +17,10 @@
 </p>
 
 <p align="center">
+  Built by <a href="https://flickerdampa.github.io/">FlickerDampa</a>, security researcher and engineer.
+</p>
+
+<p align="center">
   <img src="docs/screenshots/report-summary-light.png" width="860" alt="HTML report summary">
 </p>
 
